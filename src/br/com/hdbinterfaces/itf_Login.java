@@ -150,7 +150,7 @@ public class itf_Login extends JFrame {
 		contentPane.add(lbl_instrucaodelogin);
 		
 		JLabel lbl_background = new JLabel("Login[");
-		lbl_background.setIcon(new ImageIcon(itf_Login.class.getResource("/br/com/hdbimages/bkg.jpg")));
+		lbl_background.setIcon(new ImageIcon(itf_Login.class.getResource("/br/com/hdbimages/bkg.jpeg")));
 		lbl_background.setBounds(0, -25, 449, 307);
 		contentPane.add(lbl_background);
 	}
