@@ -57,7 +57,8 @@ public class itf_Dash extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Manutenção");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 new itf_Prontuario().show(); 
+				 new itf_Prontuario().show();
+				
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem);

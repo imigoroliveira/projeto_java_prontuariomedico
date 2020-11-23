@@ -89,6 +89,7 @@ public class itf_Login extends JFrame {
 							String usuario2 = txt_usuario.getText();
 							String senha2 = txt_senha.getText();
 							
+							
 						if(usuario.equals(usuario2)){
 							if(senha.equals(senha2))
 							{

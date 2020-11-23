@@ -87,17 +87,97 @@ public class itf_Prontuario extends JFrame {
 		contentPane.add(txt_nomedopaciente);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+
+		            String SqlInsere = "INSERT INTO prontuarios (Num_Prontuario, DataAbertura_Prontuario, NomePaciente_Prontuario) values ('" + txt_numerodoprontuario.getText() + "','" + txt_datadeabertura.getText() + "','"+ txt_nomedopaciente.getText() +  "')";
+		            ListarProntuarios.VarStatement.executeUpdate(SqlInsere);
+		            JOptionPane.showMessageDialog(null, "Registro gravado com sucesso!");
+		            //Atualiza o ResultSet para que os novos dados aparecema no next/previous
+
+		            ListarProntuarios.ExecutarSQL("SELECT * FROM prontuarios");
+		            ListarProntuarios.VarResultset.first();
+		            MostrarDadosBotoes();
+		        } catch (SQLException VarErro5) {
+
+		            JOptionPane.showMessageDialog(null, "Erro ao conectar ao BD: " + VarErro5);
+
+		        }
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.setIcon(new ImageIcon(itf_Prontuario.class.getResource("/br/com/hdbimages/ico_salvar.png")));
 		btnNewButton.setBounds(10, 263, 111, 39);
 		contentPane.add(btnNewButton);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				try {
+
+		            String SqlAltera = "UPDATE remedios SET Num_Prontuario= '" + txt_numerodoprontuario.getText() + "' ,DataAbertura_Prontuario='" + txt_datadeabertura.getText() + "' , NomePaciente_Prontuario='" + txt_nomedopaciente.getText() + "' WHERE Num_Paciente=" + txt_numerodoprontuario.getText();
+		            ListarProntuarios.VarStatement.executeUpdate(SqlAltera);
+		            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
+
+		            //Atualiza o ResultSet para que os novos dados aparecema no next/previous
+
+		            ListarProntuarios.ExecutarSQL("SELECT * FROM remedios");
+		            ListarProntuarios.VarResultset.first();
+		            MostrarDadosBotoes();
+		        } catch (SQLException VarErro5) {
+
+		            JOptionPane.showMessageDialog(null, "Erro ao conectar ao BD: " + VarErro5);
+
+		        }
+				
+			}
+		});
 		btnAlterar.setIcon(new ImageIcon(itf_Prontuario.class.getResource("/br/com/hdbimages/ico_update.png")));
 		btnAlterar.setBounds(159, 264, 111, 39);
 		contentPane.add(btnAlterar);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+		            String SqlSeleciona = "SELECT * FROM prontuarios WHERE Num_Prontuario =" + txt_numerodoprontuario.getText();
+
+		            ListarProntuarios.ExecutarSQL(SqlSeleciona);
+		            ListarProntuarios.VarResultset.first();
+
+		            String Mensagem = "Tem certeza que deseja excluir o prontuário do paciente " + ListarProntuarios.VarResultset.getString("NomePaciente_Prontuario") + "?";
+		            int Opcao = JOptionPane.showConfirmDialog(null, Mensagem, "Deletar", JOptionPane.YES_NO_OPTION);
+
+		            if (Opcao == JOptionPane.YES_OPTION) {
+		                SqlSeleciona = "DELETE FROM prontuarios WHERE Num_Prontuario=" + txt_numerodoprontuario.getText();
+		                int Exclusao = ListarProntuarios.VarStatement.executeUpdate(SqlSeleciona);
+
+		                if (Exclusao == 1) {
+		                    JOptionPane.showMessageDialog(null, "Prontuário excluído com sucesso!");
+
+		                    //Atualiza o ResultSet, agora sem o registro excluído
+		                    ListarProntuarios.ExecutarSQL("SELECT * FROM prontuarios");
+		                    ListarProntuarios.VarResultset.first();
+		                    MostrarDadosBotoes();
+		                }
+
+		            } else {
+		                return;
+		            }
+		        } catch (SQLException VarErro6) {
+
+		            JOptionPane.showMessageDialog(null, "Erro ao conectar ao BD: " + VarErro6);}
+				
+				
+				
+			}
+		});
 		btnDeletar.setIcon(new ImageIcon(itf_Prontuario.class.getResource("/br/com/hdbimages/ico_apagar.png")));
 		btnDeletar.setBounds(159, 314, 111, 39);
 		contentPane.add(btnDeletar);
@@ -105,6 +185,9 @@ public class itf_Prontuario extends JFrame {
 		JButton btnLimparCampos = new JButton("Limpar ");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				txt_numerodoprontuario.setText("");
+				txt_datadeabertura.setText("");
+				txt_nomedopaciente.setText("");
 			}
 		});
 		btnLimparCampos.setFont(new Font("Tahoma", Font.PLAIN, 12));
