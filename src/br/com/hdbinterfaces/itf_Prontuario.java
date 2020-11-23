@@ -126,7 +126,7 @@ public class itf_Prontuario extends JFrame {
 
 		            //Atualiza o ResultSet para que os novos dados aparecema no next/previous
 
-		            ListarProntuarios.ExecutarSQL("SELECT * FROM remedios");
+		            ListarProntuarios.ExecutarSQL("SELECT * FROM prontuarios");
 		            ListarProntuarios.VarResultset.first();
 		            MostrarDadosBotoes();
 		        } catch (SQLException VarErro5) {
